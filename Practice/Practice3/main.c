@@ -5,7 +5,7 @@
 
 void main()
 {
-	int mode, num, att = 0, inp, a = 1, b = 1000, lie = 0;
+	int mode, num, att = 0, inp, a = 0, b = 1000, lie = 0;
 	char answ;
 	srand((unsigned)time(0));
 	setlocale(LC_ALL, "Rus");
