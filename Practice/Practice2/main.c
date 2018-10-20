@@ -1,4 +1,4 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <locale.h>
 #include <math.h>
 #include <stdlib.h>
@@ -12,18 +12,18 @@ void main()
 	int rnd[N] = { 0 }, ain[N] = { 0 }, ord[N];
 	setlocale(LC_ALL, "Rus");
 	srand((unsigned)time(0));
-	//Ввод длины числа
+	//Р’РІРѕРґ РґР»РёРЅС‹ С‡РёСЃР»Р°
 	do
 	{
-		printf("Введите длину числа от 2 до 10\n");
+		printf("Р’РІРµРґРёС‚Рµ РґР»РёРЅСѓ С‡РёСЃР»Р° РѕС‚ 2 РґРѕ 10\n");
 		scanf("%d", &n);
 		if (n <= 1 || n > 10)
 		{
-			printf("Повторите ввод\n\n");
+			printf("РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ\n\n");
 			continue;
 		}
 	} while (n <= 1 || n > 10);
-	//Генерация случайного числа
+	//Р“РµРЅРµСЂР°С†РёСЏ СЃР»СѓС‡Р°Р№РЅРѕРіРѕ С‡РёСЃР»Р°
 	for (i = 0; i < N; i++)
 	{
 		ord[i] = i;
@@ -42,17 +42,17 @@ void main()
 	}
 	do
 	{
-		//Ввод числа
+		//Р’РІРѕРґ С‡РёСЃР»Р°
 		nt = (long long)pow(10, n);
 		do {
 			do
 			{
 				c = 0;
-				printf("Введите %i-значное число с различными цифарами\n", n);
+				printf("Р’РІРµРґРёС‚Рµ %i-Р·РЅР°С‡РЅРѕРµ С‡РёСЃР»Рѕ СЃ СЂР°Р·Р»РёС‡РЅС‹РјРё С†РёС„Р°СЂР°РјРё\n", n);
 				scanf("%lli", &in);
 				if ((in < nt * 0.1) || (in > nt))
 				{
-					printf("Повторите ввод\n\n");
+					printf("РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ\n\n");
 					continue;
 				}
 			} while ((in < nt * 0.1) || (in >= nt));
@@ -67,7 +67,7 @@ void main()
 				{
 					if (ain[q] == ain[w])
 					{
-						printf("Повторите ввод\n\n");
+						printf("РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ\n\n");
 						c++;
 						break;
 					}
@@ -75,7 +75,7 @@ void main()
 				break;
 			}
 		} while (c != 0);
-		//Сравнение
+		//РЎСЂР°РІРЅРµРЅРёРµ
 		cow = 0;
 		bull = 0;
 		for (c1 = 0; c1 < n; c1++)
@@ -87,7 +87,7 @@ void main()
 			}
 		}
 		if (bull != n)
-			printf("%d коров(ы), %d быка(ов)\n", cow, bull);
+			printf("%d РєРѕСЂРѕРІ(С‹), %d Р±С‹РєР°(РѕРІ)\n", cow, bull);
 	} while (bull != n);
-	printf("Все быки найдены\n");
+	printf("Р’СЃРµ Р±С‹РєРё РЅР°Р№РґРµРЅС‹\n");
 }
