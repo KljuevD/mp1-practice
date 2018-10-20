@@ -1,4 +1,4 @@
-п»ї#include <stdio.h>
+#include <stdio.h>
 #include <locale.h>
 #define DVP 300
 #define DSP 700
@@ -9,11 +9,11 @@ void main()
 	float w, h, d;
 	float rp, side, lid, door, shelf, tm;
 	setlocale(LC_ALL, "Rus");
-	printf("Р”Р»СЏ СЂР°СЃС‡С‘С‚Р° РјР°СЃСЃС‹ С€РєР°С„Р° РІРІРµРґРёС‚Рµ:\nР’С‹СЃРѕС‚Р° (180 вЂ“ 220 СЃРј), С€РёСЂРёРЅР° (80 вЂ“ 120 СЃРј), РіР»СѓР±РёРЅР° (50 вЂ“ 90 СЃРј)\n\n");
+	printf("Для расчёта массы шкафа введите:\nВысота (180 – 220 см), ширина (80 – 120 см), глубина (50 – 90 см)\n\n");
 	scanf("%f %f %f", &h, &w, &d);
 	if ((h < 180) || (h > 220) || (w < 80) || (w > 120) || (d < 50) || (d > 90))
 	{
-		printf("РќРµРІРµСЂРЅС‹Рµ РґР°РЅРЅС‹Рµ\n");
+		printf("Неверные данные\n");
 		return;
 	}
 	h /= 100;
@@ -28,5 +28,5 @@ void main()
 	else
 		shelf = 4 * w * d * 0.015f * DSP;
 	tm = rp + side + lid + door + shelf;
-	printf("\nРџРѕР»РЅР°СЏ РјР°СЃСЃР° С€РєР°С„Р° СЂР°РІРЅР° %.1f РєРі\n\n", tm);
+	printf("\nПолная масса шкафа равна %.1f кг\n\n", tm);
 }

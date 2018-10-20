@@ -18,11 +18,8 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4DFE2C00-C5EA-46FC-8F80-0ED036FCB803}</ProjectGuid>
+    <ProjectGuid>{8282CFFB-1CAE-4F1E-9EA4-DD8640D7C8F5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Practice3</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -144,6 +141,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

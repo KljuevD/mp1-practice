@@ -30,7 +30,7 @@ void main()
 		printf("1 Vkljuchena\n");
 		return;
 	}
-	if (((r1 > dist) && ((dist + r2) == r1))|| ((r2 > dist) && ((dist + r1) == r2))) {
+	if (((r1 > dist) && ((dist + r2) == r1)) || ((r2 > dist) && ((dist + r1) == r2))) {
 		printf("Kasajutsja iznutri\n");
 		return;
 	}
