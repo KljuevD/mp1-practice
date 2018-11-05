@@ -1,7 +1,7 @@
 ﻿#include <stdio.h>
+#include <locale.h>
 #include <stdlib.h>
 #include <time.h>
-#include <locale.h>
 
 void main()
 {
@@ -9,7 +9,8 @@ void main()
     char answ;
     srand((unsigned)time(0));
     setlocale(LC_ALL, "Rus");
-    printf("Выберите режим:\n0 – компьютер загадывает,\n1 – компьютер угадывает\n");
+    printf("Выберите режим:\n0 – компьютер загадывает,"
+        "\n1 – компьютер угадывает\n");
     do
     {
         scanf("%d", &mode);
@@ -61,7 +62,8 @@ void main()
                     if (!((answ == '<') || (answ == '>') || (answ == '=')))
                         printf("Неверный символ\n");
                     //Контроль ввода
-                    if ((answ == '<') && !(num < inp) || (answ == '>') && !(num > inp) || (answ == '=') && (num != inp))
+                    if ((answ == '<') && !(num < inp) || (answ == '>') &&
+                        !(num > inp) || (answ == '=') && (num != inp))
                     {
                         printf("Ложный ввод\n");
                         lie++;
