@@ -24,9 +24,9 @@ void main()
                 {
                     printf("Введите число от 1 до 999\n");
                     scanf("%d", &inp);
-                    if ((inp < 1) || (inp > 999))
+                    if (inp < 1 || inp > 999)
                         printf("Число вне допустимых пределов\n");
-                } while ((inp < 1) || (inp > 999));
+                } while (inp < 1 || inp > 999);
                 if (inp > num)
                 {
                     printf("Слишком большое\n");
@@ -47,9 +47,9 @@ void main()
             {
                 printf("Введите число от 1 до 999\n");
                 scanf("%d", &num);
-                if ((num < 1) || (num > 999))
+                if (num < 1 || num > 999)
                     printf("Число вне допустимых пределов\n");
-            } while ((num < 1) || (num > 999));
+            } while (num < 1 || num > 999);
             do
             {
                 inp = rand() % (b - a - 1) + 1 + a;
@@ -59,18 +59,18 @@ void main()
                 ent:
                     scanf("%*c%c", &answ);
                     //scanf(" %c", &answ);
-                    if (!((answ == '<') || (answ == '>') || (answ == '=')))
+                    if (!(answ == '<' || answ == '>' || answ == '='))
                         printf("Неверный символ\n");
                     //Контроль ввода
-                    if ((answ == '<') && !(num < inp) || (answ == '>') &&
-                        !(num > inp) || (answ == '=') && (num != inp))
+                    if (answ == '<' && !(num < inp) || answ == '>' &&
+                      !(num > inp) || answ == '=' && num != inp)
                     {
                         printf("Ложный ввод\n");
                         lie++;
                         goto ent;
                         //continue;
                     }
-                } while (!((answ == '<') || (answ == '>') || (answ == '=')));
+                } while (!(answ == '<' || answ == '>' || answ == '='));
                 switch (answ)
                 {
                 case '>':
@@ -91,5 +91,5 @@ void main()
             return;
         }
         printf("Выберите режим\n");
-    } while ((mode != 0) || (mode != 1));
+    } while (mode != 0 || mode != 1);
 }
