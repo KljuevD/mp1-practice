@@ -11,11 +11,6 @@ void Input(int a[], int n, int mode)
     if (mode != 3)
         for (i = 0; i < n; i++)
             scanf("%d", &(a[i]));
-    //else
-    //    do
-    //    {
-    //        scanf("%d", &(a[i++]));
-    //    } while ((a[i] <0 || a[i] > K - 1) && i < n);
     else
         for (i = 0; i < n;)
         {
