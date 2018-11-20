@@ -19,7 +19,7 @@ void Input(int a[], int n, int mode)
             scanf("%d", &(a[i]));
             f = 0;
             for (j = 0; j < i; j++)
-                if (abs(a[j] - a[i]) >= Range) 
+                if (a[j] - a[i] >= Range || a[i] - a[j] >= Range)
                     f = 1;
             if (f == 1)
                 continue;
