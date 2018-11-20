@@ -49,7 +49,7 @@ void ChooseSort(int a[], int n)
 void InsertSort(int a[], int n)
 {
     int i, j, tmp;
-    for (i = 0; i < n; i++)
+    for (i = 1; i < n; i++)
     {
         tmp = a[i];
         j = i - 1;
