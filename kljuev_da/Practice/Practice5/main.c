@@ -1,6 +1,5 @@
 ﻿#include <stdio.h>
 #include <locale.h>
-#include <math.h>
 #define N 5
 #define Range 100
 
@@ -19,7 +18,7 @@ void Input(int a[], int n, int mode)
             scanf("%d", &(a[i]));
             f = 0;
             for (j = 0; j < i; j++)
-                if (a[j] - a[i] >= Range || a[i] - a[j] >= Range)
+                if (a[j] - a[i] > Range - 1 || a[i] - a[j] > Range - 1)
                     f = 1;
             if (f == 1)
                 continue;
