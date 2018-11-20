@@ -1,12 +1,14 @@
 ﻿#include <stdio.h>
 #include <locale.h>
-#define N 10
-#define K 1000
+#include <math.h>
+#define N 5
+#define Range 100
+
 
 
 void Input(int a[], int n, int mode)
 {
-    int i = 0;
+    int i, j, f;
     printf("Введите массив\n");
     if (mode != 3)
         for (i = 0; i < n; i++)
@@ -15,7 +17,11 @@ void Input(int a[], int n, int mode)
         for (i = 0; i < n;)
         {
             scanf("%d", &(a[i]));
-            if (a[i] <0 || a[i] > K - 1)
+            f = 0;
+            for (j = 0; j < i; j++)
+                if (abs(a[j] - a[i]) >= Range) 
+                    f = 1;
+            if (f == 1)
                 continue;
             i++;
         }
@@ -77,13 +83,18 @@ void BubbleSort(int a[], int n)
 
 void CountingSort(int a[], int n)
 {
-    int count[K] = { 0 };
-    int i, j, ind = 0;
+    int count[Range] = { 0 };
+    int i, j, min = a[0], ind = 0;
     for (i = 0; i < n; i++)
-        count[a[i]]++;
-    for (i = 0; i < K; i++)
+    {
+        if (a[i] < min)
+            min = a[i];
+    }
+    for (i = 0; i < n; i++)
+        count[a[i] - min]++;
+    for (i = 0; i < Range; i++)
         for (j = 0; j < count[i]; j++)
-            a[ind++] = i;
+            a[ind++] = i + min;
 }
 
 void Print(int a[], int n)
@@ -97,10 +108,10 @@ void main()
 {
     int mode, a[N];
     setlocale(LC_ALL, "Rus");
+    printf("Выберите режим:\n0 – выбором, 1 – вставкой, "
+      "2 – пузырьком, 3 – подсчётом\n");
     do
     {
-        printf("Выберите режим:\n0 – выбором, 1 – вставкой, "
-          "2 – пузырьком, 3 – подсчётом\n");
         scanf("%d", &mode);
     } while (mode < 0 || mode > 3);
     Input(a, N, mode);
