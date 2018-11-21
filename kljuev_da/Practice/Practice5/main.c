@@ -29,11 +29,11 @@ void Input(int a[], int n, int mode)
 void ChooseSort(int a[], int n)
 {
     int i, j, min, ind;
-    for (i = 0; i < n; i++)
+    for (i = 0; i < n - 1; i++)
     {
         min = a[i];
         ind = i;
-        for (j = i; j < n; j++)
+        for (j = i + 1; j < n; j++)
         {
             if (a[j] < min)
             {
@@ -61,22 +61,18 @@ void InsertSort(int a[], int n)
     }
 }
 
-void Transpose(int a[], int t1, int t2)
-{
-    int tmp;
-    tmp = a[t1];
-    a[t1] = a[t2];
-    a[t2] = tmp;
-}
-
 void BubbleSort(int a[], int n)
 {
-    int i, j;
-    for (i = 0; i < n; i++)
+    int i, j, tmp;
+    for (i = 0; i < n -1; i++)
     {
-        for (j = 1; j < n; j++)
+        for (j = 1; j < n - i; j++)
             if (a[j - 1] > a[j])
-                Transpose(a, j, j - 1);
+            {
+                tmp = a[j-1];
+                a[j - 1] = a[j];
+                a[j] = tmp;
+            }
     }
 }
 
