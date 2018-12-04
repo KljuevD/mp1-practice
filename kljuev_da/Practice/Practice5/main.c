@@ -1,14 +1,17 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <locale.h>
+#include <stdlib.h> //////////////////////////////////////////
 #define N 5
 #define Range 100
 
-void Print(int a[], int n);
-/*
+void QuickSplit(int a[], int *i, int *j, int p);
+void Merge(int a[], int l, int m, int r);
+
+
 void Input(int a[], int n, int mode)
 {
     int i, j, f;
-    printf("Введите массив\n");                 ///////////////////////
+    printf("Введите массив\n");
     if (mode != 3)
         for (i = 0; i < n; i++)
             scanf("%d", &(a[i]));
@@ -24,16 +27,15 @@ void Input(int a[], int n, int mode)
                 continue;
             i++;
         }
-}*/
-
-void Input(int a[], int n, int mode)
-{
-    a[0] = 1;
-    a[1] = 2;
-    a[2] = 3;
-    a[3] = 4;
-    a[4] = 5;
 }
+
+void Print(int a[], int n)
+{
+    int i;
+    for (i = 0; i < n; i++)
+        printf("%d\n", a[i]);
+}
+
 void ChooseSort(int a[], int n)
 {
     int i, j, min, ind;
@@ -100,10 +102,31 @@ void CountingSort(int a[], int n)
             a[ind++] = i + min;
 }
 
+void QuickSort(int a[], int n1, int n2)
+{
+    int m = (n1 + n2) / 2;
+    int i = n1, j = n2;
+    QuickSplit(a, &i, &j, a[m]);
+    if (i > n1)
+        QuickSort(a, n1, i - 1);
+    if (j < n2)
+        QuickSort(a, j + 1, n2);
+}
+
+void MergeSort(int a[], int l, int r)
+{
+    int m = (l + r) / 2;
+    if (l >= r)
+        return;
+    MergeSort(a, l, m);
+    MergeSort(a, m + 1, r);
+    Merge(a, l, m, r);
+}
+
 void QuickSplit(int a[], int *i, int *j, int p)
 {
     do
-    {       
+    {
         while (a[*i] < p)
             (*i)++;
         while (a[*j] > p)
@@ -117,53 +140,19 @@ void QuickSplit(int a[], int *i, int *j, int p)
     } while (*i < *j);
 }
 
-void QuickSort(int a[], int n1, int n2)
-{
-    int m = (n1 + n2) / 2;
-    int i = n1, j = n2;
-    QuickSplit(a, &i, &j, a[m]);
-    if (i > n1)
-        QuickSort(a, n1, i - 1);
-    if (j < n2)
-        QuickSort(a, j + 1, n2);
-}
-
 void Merge(int a[], int l, int m, int r)
 {
-    int i = l, j = m, c = 0, tarr[N], k = 0;
-    while (i < m && j < r)
-    {
-        if (a[i] < a[j])
-            tarr[c++] = a[i++];
-        else
-            tarr[c++] = a[j++];
-    }
-    while (i < m)
-        tarr[c++] = a[i++];
-    while (j < r)
-        tarr[c++] = a[j++];
-    while (k < r - l)
-        a[i] = tarr[i];
-    Print(a, r - l);
+    int i = l, j = m + 1, s = l, c[N], k = l;
+    while (i < m + 1 && j < r + 1)
+        c[s++] = a[i] < a[j] ? a[i++] : a[j++];
+    while (i < m + 1)
+        c[s++] = a[i++];
+    while (j < r + 1)
+        c[s++] = a[j++];
+    while (k < r + 1)
+        a[k] = c[k++];
 }
 
-void MergeSort(int a[], int l, int r)
-{
-    int m = (l + r) / 2;
-    if (l >= r)
-        return;
-    printf("ff\n");     ///////////
-    MergeSort(a, l, m);
-    MergeSort(a, m, r);
-    Merge(a, l, m, r);
-}
-
-void Print(int a[], int n)
-{
-    int i;
-    for (i = 0; i < n; i++)
-        printf("%d\n", a[i]);
-}
 
 void main()
 {
