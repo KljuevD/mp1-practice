@@ -1,6 +1,5 @@
 ﻿#include <stdio.h>
 #include <locale.h>
-#include <stdlib.h> //////////////////////////////////////////
 #define N 5
 #define Range 100
 
