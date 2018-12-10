@@ -1,13 +1,14 @@
-﻿#include <stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <locale.h>
 #define N 5
 #define Range 100
 
-void QuickSplit(int a[], int *i, int *j, int p);
-void Merge(int a[], int l, int m, int r);
+void QuickSplit(int *a, int *i, int *j, int p);
+void Merge(int *a, int l, int m, int r);
 
 
-void Input(int a[], int n, int mode)
+void Input(int *a, int n, int mode)
 {
     int i, j, f;
     printf("Введите массив\n");
@@ -28,14 +29,14 @@ void Input(int a[], int n, int mode)
         }
 }
 
-void Print(int a[], int n)
+void Print(int *a, int n)
 {
     int i;
     for (i = 0; i < n; i++)
         printf("%d\n", a[i]);
 }
 
-void ChooseSort(int a[], int n)
+void ChooseSort(int *a, int n)
 {
     int i, j, min, ind;
     for (i = 0; i < n - 1; i++)
@@ -55,7 +56,7 @@ void ChooseSort(int a[], int n)
     }
 }
 
-void InsertSort(int a[], int n)
+void InsertSort(int *a, int n)
 {
     int i, j, tmp;
     for (i = 1; i < n; i++)
@@ -70,7 +71,7 @@ void InsertSort(int a[], int n)
     }
 }
 
-void BubbleSort(int a[], int n)
+void BubbleSort(int *a, int n)
 {
     int i, j, tmp;
     for (i = 0; i < n - 1; i++)
@@ -85,10 +86,11 @@ void BubbleSort(int a[], int n)
     }
 }
 
-void CountingSort(int a[], int n)
+void CountingSort(int *a, int n)
 {
-    int count[Range] = { 0 };
-    int i, j, min = a[0], ind = 0;
+    int *count, i, j, min = a[0], ind = 0;
+    count = (void*)malloc(Range * sizeof(int));
+    memset(count, 0, Range * sizeof(int));
     for (i = 0; i < n; i++)
     {
         if (a[i] < min)
@@ -99,9 +101,10 @@ void CountingSort(int a[], int n)
     for (i = 0; i < Range; i++)
         for (j = 0; j < count[i]; j++)
             a[ind++] = i + min;
+    free(count);
 }
 
-void QuickSort(int a[], int n1, int n2)
+void QuickSort(int *a, int n1, int n2)
 {
     int m = (n1 + n2) / 2;
     int i = n1, j = n2;
@@ -112,7 +115,7 @@ void QuickSort(int a[], int n1, int n2)
         QuickSort(a, j + 1, n2);
 }
 
-void MergeSort(int a[], int l, int r)
+void MergeSort(int *a, int l, int r)
 {
     int m = (l + r) / 2;
     if (l >= r)
@@ -122,7 +125,7 @@ void MergeSort(int a[], int l, int r)
     Merge(a, l, m, r);
 }
 
-void QuickSplit(int a[], int *i, int *j, int p)
+void QuickSplit(int *a, int *i, int *j, int p)
 {
     do
     {
@@ -139,9 +142,10 @@ void QuickSplit(int a[], int *i, int *j, int p)
     } while (*i < *j);
 }
 
-void Merge(int a[], int l, int m, int r)
+void Merge(int *a, int l, int m, int r)
 {
-    int i = l, j = m + 1, s = l, c[N], k = l;
+    int i = l, j = m + 1, s = l, *c, k = l;
+    c = (int*)malloc(N * sizeof(int));
     while (i < m + 1 && j < r + 1)
         c[s++] = a[i] < a[j] ? a[i++] : a[j++];
     while (i < m + 1)
@@ -150,13 +154,15 @@ void Merge(int a[], int l, int m, int r)
         c[s++] = a[j++];
     while (k < r + 1)
         a[k] = c[k++];
+    free(c);
 }
 
 
 void main()
 {
-    int mode, a[N];
+    int mode, *a;
     setlocale(LC_ALL, "Rus");
+    a = (int*)malloc(N * sizeof(int));
     printf("Выберите режим:\n0 – выбором, 1 – вставкой, "
       "2 – пузырьком, 3 – подсчётом,\n4 – быстрая, "
       "5 – слиянием\n");
@@ -187,4 +193,5 @@ void main()
         MergeSort(a, 0, N - 1);
     }
     Print(a, N);
+    free(a);
 }
