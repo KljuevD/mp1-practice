@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <windows.h>
+#define MAX_LEN 256
 #define N 5
 #define Range 100
 
 void QuickSplit(int *a, int *i, int *j, int p);
 void Merge(int *a, int l, int m, int r);
-
 
 void Input(int *a, int n, int mode)
 {
@@ -28,14 +29,12 @@ void Input(int *a, int n, int mode)
             i++;
         }
 }
-
 void Print(int *a, int n)
 {
     int i;
     for (i = 0; i < n; i++)
         printf("%d\n", a[i]);
 }
-
 void ChooseSort(int *a, int n)
 {
     int i, j, min, ind;
@@ -55,7 +54,6 @@ void ChooseSort(int *a, int n)
         a[i] = min;
     }
 }
-
 void InsertSort(int *a, int n)
 {
     int i, j, tmp;
@@ -70,7 +68,6 @@ void InsertSort(int *a, int n)
         }
     }
 }
-
 void BubbleSort(int *a, int n)
 {
     int i, j, tmp;
@@ -85,7 +82,6 @@ void BubbleSort(int *a, int n)
             }
     }
 }
-
 void CountingSort(int *a, int n)
 {
     int *count, i, j, min = a[0], ind = 0;
@@ -103,7 +99,6 @@ void CountingSort(int *a, int n)
             a[ind++] = i + min;
     free(count);
 }
-
 void QuickSort(int *a, int n1, int n2)
 {
     int m = (n1 + n2) / 2;
@@ -114,7 +109,6 @@ void QuickSort(int *a, int n1, int n2)
     if (j < n2)
         QuickSort(a, j + 1, n2);
 }
-
 void MergeSort(int *a, int l, int r)
 {
     int m = (l + r) / 2;
@@ -124,7 +118,6 @@ void MergeSort(int *a, int l, int r)
     MergeSort(a, m + 1, r);
     Merge(a, l, m, r);
 }
-
 void QuickSplit(int *a, int *i, int *j, int p)
 {
     do
@@ -141,7 +134,6 @@ void QuickSplit(int *a, int *i, int *j, int p)
         }
     } while (*i < *j);
 }
-
 void Merge(int *a, int l, int m, int r)
 {
     int i = l, j = m + 1, s = l, *c, k = l;
@@ -156,20 +148,75 @@ void Merge(int *a, int l, int m, int r)
         a[k] = c[k++];
     free(c);
 }
-
-
+int ListDirectoryContents(const wchar_t *sDir, int mode)
+{
+    WIN32_FIND_DATAW fdFile;
+    void* hFind = NULL;
+    wchar_t* sPath;
+    sPath = (wchar_t*)malloc(2048 * sizeof(wchar_t));
+    wsprintf(sPath, L"%s\\*.*", sDir);
+    if ((hFind = FindFirstFileW(sPath, &fdFile)) == INVALID_HANDLE_VALUE)
+    {
+        wprintf(L"Path not found: [%s]\n", sDir);
+        return 1;
+    }
+    do
+    {
+        if (wcscmp(fdFile.cFileName, L".") != 0 && wcscmp
+          (fdFile.cFileName, L"..") != 0)
+        {
+            ULONGLONG fileSize = fdFile.nFileSizeHigh;
+            fileSize <<= sizeof(fdFile.nFileSizeHigh) * 8;
+            fileSize |= fdFile.nFileSizeLow;
+            wsprintf(sPath, L"%s\\%s", sDir, fdFile.cFileName);
+            wprintf(L"File: %s\nSize: %d\n", sPath, (wchar_t)fileSize);
+        }
+    } while (FindNextFile(hFind, &fdFile));
+    FindClose(hFind);
+    free(sPath);
+    return 0;
+}
 void main()
+{
+    char* ta = (char*)malloc(MAX_LEN);
+    wchar_t* ca = (wchar_t*)malloc(MAX_LEN);
+    setlocale(LC_ALL, "Rus");
+    while (1)
+    {
+        int mode = -1;
+        printf("Выберите режим:\n0 – выбором, 1 – вставкой, "
+            "2 – пузырьком, 3 – подсчётом,\n4 – быстрая, "
+            "5 – слиянием,\n6 для выхода\n");
+        do
+        {
+            scanf("%d", &mode);
+        } while (mode < 0 || mode > 6);
+        if (mode == 6)
+            return;
+        printf("Введите адрес\n");
+        getchar();
+        fgets(ta, MAX_LEN, stdin);
+        ta[strlen(ta) - 1] = '\0';
+        swprintf(ca, MAX_LEN, L"%hs", ta);
+        ListDirectoryContents(ca, mode);
+    }
+    free(ta);
+    free(ca);
+}
+
+/*void main()
 {
     int mode, *a;
     setlocale(LC_ALL, "Rus");
     a = (int*)malloc(N * sizeof(int));
+    
     printf("Выберите режим:\n0 – выбором, 1 – вставкой, "
       "2 – пузырьком, 3 – подсчётом,\n4 – быстрая, "
-      "5 – слиянием\n");
+      "5 – слиянием,\n6 для выхода\n");
     do
     {
         scanf("%d", &mode);
-    } while (mode < 0 || mode > 5);
+    } while (mode < 0 || mode > 6);
     Input(a, N, mode);
     printf("\nСортировка по возрастанию\n\n");
     switch (mode)
@@ -195,3 +242,4 @@ void main()
     Print(a, N);
     free(a);
 }
+*/
