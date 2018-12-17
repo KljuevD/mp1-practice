@@ -1,8 +1,9 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
 #include <windows.h>
 #define MAX_LEN 256
+#define MAX_AMOUNT 256
 #define N 5
 #define Range 100
 
@@ -150,9 +151,22 @@ void Merge(int *a, int l, int m, int r)
 }
 int ListDirectoryContents(const wchar_t *sDir, int mode)
 {
-    WIN32_FIND_DATAW fdFile;
-    void* hFind = NULL;
+    //typedef struct file_ { wchar_t name[MAX_LEN]; ULONGLONG size } file;
+    int num = 0, i, *index;
+    wchar_t** name;
+    ULONGLONG* size;
+    WIN32_FIND_DATA fdFile;
+    HANDLE hFind = NULL;
     wchar_t* sPath;
+    //index = (int*)malloc(sizeof(int) * MAX_AMOUNT);
+    index = (int*)malloc(MAX_AMOUNT * sizeof(int));
+    name = (wchar_t*)malloc(sizeof(wchar_t) * MAX_AMOUNT);
+   // size = (int*)malloc(sizeof(int) * MAX_AMOUNT);
+    size = (ULONGLONG*)malloc(MAX_AMOUNT * sizeof(ULONGLONG));
+    for (i = 0; i < MAX_AMOUNT; i++)
+        index[i] = i;
+    for (i = 0; i < MAX_AMOUNT; i++)
+        name[i] = (wchar_t*)malloc(sizeof(wchar_t) * MAX_LEN);
     sPath = (wchar_t*)malloc(2048 * sizeof(wchar_t));
     wsprintf(sPath, L"%s\\*.*", sDir);
     if ((hFind = FindFirstFileW(sPath, &fdFile)) == INVALID_HANDLE_VALUE)
@@ -170,10 +184,16 @@ int ListDirectoryContents(const wchar_t *sDir, int mode)
             fileSize |= fdFile.nFileSizeLow;
             wsprintf(sPath, L"%s\\%s", sDir, fdFile.cFileName);
             wprintf(L"File: %s\nSize: %d\n", sPath, (wchar_t)fileSize);
+            num++;
         }
     } while (FindNextFile(hFind, &fdFile));
     FindClose(hFind);
-    free(sPath);
+   // for (i = 0; i < MAX_AMOUNT; i++)
+     //   free(name[i]);
+    //free(name);
+    free(size);
+   // free(index);
+    free(sPath + 1);
     return 0;
 }
 void main()
