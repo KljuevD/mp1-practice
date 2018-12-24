@@ -5,9 +5,7 @@
 #include <time.h>
 #define MAX_LEN 256
 #define MAX_AMOUNT 1024
-#define Range 16777216
 
-void QuickSplit(ULONGLONG *size_copy, int *i, int *j, ULONGLONG base);
 void Merge(ULONGLONG *size_copy, int l, int m, int r);
 
 void Print(wchar_t **name, ULONGLONG *size, int *index, int n, int order, double time)
@@ -17,7 +15,7 @@ void Print(wchar_t **name, ULONGLONG *size, int *index, int n, int order, double
         printf("В папке нет элементов\n");
     else
     {
-     if (order == 1)
+     if (order == 0)
           for (i = 0; i < n; i++)
                wprintf(L"Файл: %s Размер: %lli\n",
                   name[index[i]], size[index[i]]);
@@ -81,48 +79,44 @@ void BubbleSort(ULONGLONG *size_copy, int n)
 void CountingSort(ULONGLONG *size_copy, int n)
 {
     int *count, i, j, ind = 0;
-    ULONGLONG min = size_copy[0];
-    count = (void*)malloc(Range * sizeof(int));
-    memset(count, 0, Range * sizeof(int));
+    ULONGLONG min = size_copy[0], max = size_copy[0];
     for (i = 0; i < n; i++)
     {
         if (size_copy[i] < min)
             min = size_copy[i];
+        if (size_copy[i] > max)
+            max = size_copy[i];
     }
+    count = (void*)malloc((max - min + 1) * sizeof(int));
+    memset(count, 0, (max - min + 1) * sizeof(int));
     for (i = 0; i < n; i++)
         count[size_copy[i] - min]++;
-    for (i = 0; i < Range; i++)
+    for (i = 0; i < (max - min + 1); i++)
         for (j = 0; j < count[i]; j++)
-        {
-            size_copy[ind] = i + min;
-        }
+            size_copy[ind++] = i + min;
     free(count);
 }
 void QuickSort(ULONGLONG *size_copy, int n1, int n2)
 {
-    ULONGLONG m = (n1 + n2) / 2;
+    ULONGLONG m = size_copy[(n1 + n2) / 2];
     int i = n1, j = n2;
-    QuickSplit(size_copy, &i, &j, size_copy[m]);
-    if (i > n1)
-        QuickSort(size_copy, n1, i - 1);
-    if (j < n2)
-        QuickSort(size_copy, j + 1, n2);
-}
-void QuickSplit(ULONGLONG *size_copy, int *i, int *j, ULONGLONG base)
-{
     do
     {
-        while (size_copy[*i] < base)
-            (*i)++;
-        while (size_copy[*j] > base)
-            (*j)--;
-        if (*i <= *j)
+        while (size_copy[i] < m)
+            i++;
+        while (size_copy[j] > m)
+            j--;
+        if (i <= j)
         {
-            ULONGLONG tmp = size_copy[*i];
-            size_copy[*i] = size_copy[*j];
-            size_copy[*j] = tmp;
+            ULONGLONG tmp = size_copy[i];
+            size_copy[i++] = size_copy[j];
+            size_copy[j--] = tmp;
         }
-    } while (*i < *j);
+    } while (i <= j);
+    if (i < n2)
+        QuickSort(size_copy, i, n2);
+    if (j > n1)
+        QuickSort(size_copy, n1, j);
 }
 void MergeSort(ULONGLONG *size_copy, int l, int r)
 {
