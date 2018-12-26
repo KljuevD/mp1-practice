@@ -52,11 +52,12 @@ void main()
             } while (num < 1 || num > 999);
             do
             {
+                int t;
                 inp = rand() % (b - a - 1) + 1 + a;
                 printf("Число %d, оцените его (символы '>' '=' '<')\n", inp);
                 do
                 {
-                ent:
+                    t = 0;
                     scanf("%*c%c", &answ);
                     //scanf(" %c", &answ);
                     if (!(answ == '<' || answ == '>' || answ == '='))
@@ -67,10 +68,9 @@ void main()
                     {
                         printf("Ложный ввод\n");
                         lie++;
-                        goto ent;
-                        //continue;
+                        t = 1;
                     }
-                } while (!(answ == '<' || answ == '>' || answ == '='));
+                } while (!(answ == '<' || answ == '>' || answ == '=') || t == 1);
                 switch (answ)
                 {
                 case '>':
