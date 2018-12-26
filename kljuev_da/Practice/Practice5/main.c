@@ -216,27 +216,33 @@ void main()
             size_copy[i] = size[i];
         for (i = 0; i < amount; i++)
             size_t[i] = size[i];
-        time = clock();
         switch (mode)
         {
             case 0:
+                time = clock();
                 ChooseSort(size_copy, amount + 1);
                 break;
             case 1:
+                time = clock();
                 InsertSort(size_copy, amount + 1);
                 break;
             case 2:
+                time = clock();
                 BubbleSort(size_copy, amount);
                 break;
             case 3:
+                time = clock();
                 CountingSort(size_copy, amount);
                 break;
             case 4:
+                time = clock();
                 QuickSort(size_copy, 0, amount - 1);
                 break;
             case 5:
+                time = clock();
                 MergeSort(size_copy, 0, amount - 1);
         }
+        time = clock() - time;
         for (ind = 0; ind < amount; ind++)
         {
             for (i = 0; i < amount; i++)
@@ -247,7 +253,6 @@ void main()
                 }
             index[ind] = i;
         }
-        time = clock() - time;
         t = ((double)time) / CLOCKS_PER_SEC;
         Print(name, size, index, amount, order, t);
         for (i = 0; i < MAX_AMOUNT; i++)
