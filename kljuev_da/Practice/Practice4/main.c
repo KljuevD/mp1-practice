@@ -1,6 +1,7 @@
 ﻿#include <stdio.h>
 #include <locale.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #define N 10000
 #define PMAX 9999
@@ -9,6 +10,7 @@
 int code[N], price[N], discount[N],
 amount[N], value[N];
 int num;
+char scode[N][5];
 char name[40][16] =
 {
     "Параметр_А0", "Параметр_А1", "Параметр_А2", "Параметр_А3", "Параметр_А4",
@@ -65,31 +67,50 @@ char* GetName(int tcode, int pos)
 
 void Scan()
 {
-    int i = 0;
+    int i;
     do
     {
+        int tamount, c;
+        i = 0;
         printf("Введите штрих-код товара (0001 – 9999)\n"
           "Введите 0000 для перехода к расчёту стоимости\n");
-        do
-        {
-            scanf("%d", &code[num]);
-        } while (code[num] < 0 || code[num] > 9999);
-        value[num] = code[num];
-        amount[code[num]]++;
-        if (num == 0 && code[num] == 0)
+        scanf("%s", scode[num]);
+        scode[num][5] = '\0';
+        if (num == 0 && (!strcmp(scode[num], "0000") || !strcmp(scode[num], "000")
+          || !strcmp(scode[num], "00") || !strcmp(scode[num], "0")))
             continue;
-        if (code[num] == 0)
+        if (!strcmp(scode[num], "0000") || !strcmp(scode[num], "000")
+              || !strcmp(scode[num], "00") || !strcmp(scode[num], "0"))
             i = 1;
-        else
+        code[num] = atoi(scode[num]);
+        if (code[num] < 1 || code[num] > 9999)
+            continue;
+        if(strcmp(scode[num], "0000"))
         {
-            printf("\nКод %d\n%s %s %s %s\nСтомость %d рублей\n"
+            printf("\nКод %04d\n%s %s %s %s\nСтомость %d рублей\n"
               "Скидка %d%%\nСтоимость со скидкой %d рублей\n\n",
               code[num], GetName(code[num], 0), GetName(code[num], 1),
               GetName(code[num], 2), GetName(code[num], 3),
               price[code[num]], discount[code[num]],
               Discounted(price[code[num]], discount[code[num]]));
+        }
+        printf("Выберите количество товаров данного вида либо нажмите 0, "
+          "чтобы не добавлять\n");
+        do
+        {
+            scanf("%d", &tamount);
+        } while (tamount < 0);
+        getchar();
+        if (tamount == 0)
+            continue;
+        amount[code[num]] += tamount;
+        for (c = 0; c < tamount; c++)
+        {
+            value[num] = code[num];
             num++;
         }
+        //value[num] = code[num];
+        //num++;
     } while (i == 0);
 }
 
@@ -104,9 +125,9 @@ void Receipt()
         int tprice = Discounted(price[value[i]], discount[value[i]]);
         int tsprice = Discounted(price[value[i]], discount[value[i]]) *
             amount[value[i]];
-        printf("%s %s %s %s\nСтоимость (со скидкой) %d рублей\n"
+        printf("Код %04d\n%s %s %s %s\nСтоимость (со скидкой) %d рублей\n"
           "Количество %d штук(а)\nСуммарно %d рублей\n",
-          GetName(value[i], 0), GetName(value[i], 1),
+          value[i], GetName(value[i], 0), GetName(value[i], 1),
           GetName(value[i], 2), GetName(value[i], 3),
           tprice, amount[value[i]], tsprice);
         sum += tsprice;
