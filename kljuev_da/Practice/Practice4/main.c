@@ -75,13 +75,17 @@ void Scan()
         printf("Введите штрих-код товара (0001 – 9999)\n"
           "Введите 0000 для перехода к расчёту стоимости\n");
         scanf("%s", scode[num]);
-        scode[num][5] = '\0';
-        if (num == 0 && (!strcmp(scode[num], "0000") || !strcmp(scode[num], "000")
-          || !strcmp(scode[num], "00") || !strcmp(scode[num], "0")))
+        if (num == 0 && (!strcmp(scode[num], "0000") ||
+            !strcmp(scode[num], "000") || !strcmp(scode[num], "00") ||
+            !strcmp(scode[num], "0")))
             continue;
         if (!strcmp(scode[num], "0000") || !strcmp(scode[num], "000")
-              || !strcmp(scode[num], "00") || !strcmp(scode[num], "0"))
+            || !strcmp(scode[num], "00") || !strcmp(scode[num], "0"))
             i = 1;
+        if (scode[num][0] == '\0' || scode[num][1] == '\0' ||
+          scode[num][2] == '\0' || scode[num][3] == '\0')
+            continue;
+        scode[num][4] = '\0';
         code[num] = atoi(scode[num]);
         if (code[num] < 1 || code[num] > 9999)
             continue;
